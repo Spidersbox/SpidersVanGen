@@ -311,9 +311,6 @@ usage(const char *name)
 "-i            Case-insensitive prefix search\n"
 "-k            Keep pattern and continue search after finding a match\n"
 "-1            Stop after first match\n"
-"-N            Generate namecoin address\n"
-"-T            Generate bitcoin testnet address\n"
-"-S            Generate securecoin address\n"
 "-X <version>  Generate address with the given version\n"
 "-F <format>   Generate address with the given format (pubkey or script)\n"
 "-P <pubkey>   Specify base public key for piecewise key generation\n"
@@ -323,7 +320,12 @@ usage(const char *name)
 "-f <file>     File containing list of patterns, one per line\n"
 "              (Use \"-\" as the file name for stdin)\n"
 "-o <file>     Write pattern matches to <file>\n"
-"-s <file>     Seed random number generator from <file>\n",
+"-s <file>     Seed random number generator from <file>\n"
+"-N            Generate namecoin address\n"
+"-L            Generate litecoin address\n"
+"-T            Generate bitcoin testnet address\n"
+"-D            Generate dogecoin address\n"
+"-S            Generate securecoin address\n",
 version, name);
 }
 
@@ -388,6 +390,16 @@ main(int argc, char **argv)
 		case 'N':
 			addrtype = 52;
 			privtype = 180;
+			scriptaddrtype = -1;
+			break;
+		case 'L':
+			addrtype = 48;
+			privtype = 176;
+			scriptaddrtype = -1;
+			break;
+		case 'D':
+			addrtype = 30;
+			privtype = 158;
 			scriptaddrtype = -1;
 			break;
 		case 'T':
