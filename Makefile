@@ -1,5 +1,5 @@
 LIBS=-lpcre -lcrypto -lm -lpthread
-CFLAGS=-ggdb -O3 -Wall
+CFLAGS=-L/usr/local/opt/openssl/lib -L/usr/local/lib -I/usr/local/opt/openssl/include -I/usr/local/include -ggdb -O3 -Wall
 OBJS=vanitygen.o oclvanitygen.o oclvanityminer.o oclengine.o keyconv.o pattern.o util.o
 PROGS=vanitygen keyconv oclvanitygen oclvanityminer
 

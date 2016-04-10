@@ -46,8 +46,18 @@ Pattern: 1Love
 Address: 1LoveRg5t2NCDLUZh6Q8ixv74M5YGVxXaN
 Privkey: 5JLUmjZiirgziDmWmNprPsNx8DYwfecUNk1FQXmDPaoKB36fX1o
 
+# If you want to generate a Dogecoin (DOGE) or Verge (XVG), use -D option like this:
+$ ./vanitygen -D Derp
+Difficulty: 78508
+ERROR: could not determine processor count
+Pattern: DERP
+Address: DERP2NJ8nFa5L2ko85s9w2YsBij4pPDdii
+Privkey: 6JU8NjueYjDX5vXd8PyzKCJMsVLMhcm28JMFN8Vcqhs8kqaJUD1
+
 Currently, it is difficult to import the private key into bitcoin.  
 Sipa's showwallet branch has a new command called "importprivkey" that 
 accepts the base-58 encoded private key.  Vanitygen has been tested to 
 work with that version of bitcoin.
 
+Note: To build on mac, you may need to run:
+   brew install pcre pcre++

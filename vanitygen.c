@@ -364,7 +364,7 @@ main(int argc, char **argv)
 
 	int i;
 
-	while ((opt = getopt(argc, argv, "vqnrik1eE:P:NTSX:F:t:h?f:o:s:")) != -1) {
+	while ((opt = getopt(argc, argv, "vqnrik1eE:P:NDTSX:F:t:h?f:o:s:")) != -1) {
 		switch (opt) {
 		case 'v':
 			verbose = 2;
