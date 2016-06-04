@@ -75,6 +75,12 @@ usage(const char *name)
 "-V            Enable kernel/OpenCL/hardware verification (SLOW)\n"
 "-f <file>     File containing list of patterns, one per line\n"
 "              (Use \"-\" as the file name for stdin)\n"
+"-N            Generate namecoin address\n"
+"-L            Generate litecoin address\n"
+"-B            Generate Bitbar address\n"
+"-T            Generate bitcoin testnet address\n"
+"-G            Generate dogecoin address\n"
+"-C            Generate seCurecoin address\n"
 "-o <file>     Write pattern matches to <file>\n"
 "-s <file>     Seed random number generator from <file>\n",
 version, name);
@@ -122,8 +128,8 @@ main(int argc, char **argv)
 
 	int i;
 
-	while ((opt = getopt(argc, argv,
-			     "vqik1NTX:eE:p:P:d:w:t:g:b:VSh?f:o:s:D:")) != -1) {
+//        while ((opt = getopt(argc, argv, "vqnrik1eE:P:BNDTLSX:F:t:h?f:o:s:")) != -1) {
+	while ((opt = getopt(argc, argv, "vqik1NLBGTCX:eE:p:P:d:w:t:g:b:VSh?f:o:s:D:")) != -1) {
 		switch (opt) {
 		case 'v':
 			verbose = 2;
@@ -140,13 +146,35 @@ main(int argc, char **argv)
 		case '1':
 			only_one = 1;
 			break;
-		case 'N':
-			addrtype = 52;
-			privtype = 180;
-			break;
-		case 'T':
-			addrtype = 111;
-			privtype = 239;
+                case 'N':
+                        addrtype = 52;
+                        privtype = 180;
+                        //scriptaddrtype = -1;
+                        break;
+                case 'L':
+                        addrtype = 48;
+                        privtype = 176;
+                        //scriptaddrtype = -1;
+                        break;
+                case 'B':
+                        addrtype = 25;
+                        privtype = 153;
+                        //scriptaddrtype = -1;//-1;
+                        break;
+                case 'G':	// Doge
+                        addrtype = 30;
+                        privtype = 158;
+                        //scriptaddrtype = -1;
+                        break;
+                case 'T':
+                        addrtype = 111;
+                        privtype = 239;
+                        //scriptaddrtype = 196;
+                        break;
+		case 'C':	// Securecoin
+			addrtype = 125;
+			privtype = 128;
+			//scriptaddrtype = -1;
 			break;
 		case 'X':
 			addrtype = atoi(optarg);

@@ -29,12 +29,12 @@
 #include <openssl/evp.h>
 
 #ifdef __APPLE__
-#include <OpenCL/cl.h>
+#include "CL/cl.h"
 #ifndef CL_CALLBACK
 #define CL_CALLBACK
 #endif
 #else
-#include <CL/cl.h>
+#include "CL/cl.h"
 #endif
 
 #include "oclengine.h"
