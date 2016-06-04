@@ -323,6 +323,7 @@ usage(const char *name)
 "-s <file>     Seed random number generator from <file>\n"
 "-N            Generate namecoin address\n"
 "-L            Generate litecoin address\n"
+"-B            Generate Bitbar address\n"
 "-T            Generate bitcoin testnet address\n"
 "-D            Generate dogecoin address\n"
 "-S            Generate securecoin address\n",
@@ -364,7 +365,7 @@ main(int argc, char **argv)
 
 	int i;
 
-	while ((opt = getopt(argc, argv, "vqnrik1eE:P:NDTLSX:F:t:h?f:o:s:")) != -1) {
+	while ((opt = getopt(argc, argv, "vqnrik1eE:P:BNDTLSX:F:t:h?f:o:s:")) != -1) {
 		switch (opt) {
 		case 'v':
 			verbose = 2;
@@ -396,6 +397,11 @@ main(int argc, char **argv)
 			addrtype = 48;
 			privtype = 176;
 			scriptaddrtype = -1;
+			break;
+		case 'B':
+			addrtype = 25;
+			privtype = 153;
+			scriptaddrtype = -1;//-1;
 			break;
 		case 'D':
 			addrtype = 30;
