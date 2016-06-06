@@ -321,12 +321,13 @@ usage(const char *name)
 "              (Use \"-\" as the file name for stdin)\n"
 "-o <file>     Write pattern matches to <file>\n"
 "-s <file>     Seed random number generator from <file>\n"
-"-N            Generate namecoin address\n"
-"-L            Generate litecoin address\n"
+"-N            Generate Namecoin address\n"
+"-L            Generate Litecoin and LiteBar address\n"
 "-B            Generate Bitbar address\n"
-"-T            Generate bitcoin testnet address\n"
-"-D            Generate dogecoin address\n"
-"-S            Generate securecoin address\n",
+"-T            Generate bitcoin Testnet address\n"
+"-D            Generate Dogecoin address\n"
+"-C            Generate bottleCcap address\n"
+"-S            Generate Securecoin address\n",
 version, name);
 }
 
@@ -365,7 +366,7 @@ main(int argc, char **argv)
 
 	int i;
 
-	while ((opt = getopt(argc, argv, "vqnrik1eE:P:BNDTLSX:F:t:h?f:o:s:")) != -1) {
+	while ((opt = getopt(argc, argv, "vqnrik1eE:P:BCNDTLSX:F:t:h?f:o:s:")) != -1) {
 		switch (opt) {
 		case 'v':
 			verbose = 2;
@@ -413,11 +414,16 @@ main(int argc, char **argv)
 			privtype = 239;
 			scriptaddrtype = 196;
 			break;
-        case 'S':
-            addrtype = 125;
-            privtype = 128;
-            scriptaddrtype = -1;
-            break;
+		case 'S':
+			addrtype = 125;
+			privtype = 128;
+			scriptaddrtype = -1;
+			break;
+                case 'C':       // BottleCaps
+                        addrtype = 33;
+                        privtype = 161;
+                        break;
+
 		case 'X':
 			addrtype = atoi(optarg);
 			privtype = 128 + addrtype;
