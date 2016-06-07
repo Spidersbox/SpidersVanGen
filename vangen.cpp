@@ -20,7 +20,7 @@
 #include <string.h>
 #include <string>
 //using std::string;
-//using namespace std;
+using namespace std;
 #include <math.h>
 #include <assert.h>
 
@@ -42,9 +42,9 @@ extern "C"
 const char *version = VANITYGEN_VERSION;
 #define DATE "June 06, 2016"
 
-std::string CName;
-std::string CString;
-
+string CName;
+string CString;
+string Cchar;
 /*
  * Address search thread main loop
  */
@@ -345,14 +345,14 @@ version, name);
 void ListCommands()
 {
    printf("\nSpider's Vanity Generator, version %s  date %s\n",VANITYGEN_VERSION,DATE);
-   printf("Use to control one or more HIDAPI relay cards.\n");
    printf("\n");
    printf("vanitygen [name] [string] [options]\n");
    printf("  [name]    Crypto name or ticker symbol.\n");
-   printf("  [string]  what you want after the first charactor.\n");
+   printf("  [string]  what you want after the first character.\n");
    printf("  [options] option list:\n");
    printf("            v verbose\n");
    printf("            i insensitive case match\n");
+   printf("            [h or help] \'name\'  to show current list of crypto\'s\n");
 
   printf("\n");
 }
@@ -394,35 +394,70 @@ int main(int argc, char **argv)
 //**************************************************
 //***************  parse commands  *****************
 
-  CName="Bitcoin";  // set default
+  CName="missing";  // set default
+  Cchar="X";
   if(argc==1)
     ListCommands();
 
   if(argc>1)
   {
-    if(!strcasecmp(argv[1],"help"))
+    if((!strcasecmp(argv[1],"help"))||(!strcasecmp(argv[1],"h"))||(!strcasecmp(argv[1],"-h")))
     {
+      if(argc>2)
+      {
+        if(!strcasecmp(argv[2],"name"))
+        {
+          printf("\n - List of crypto-currencies\n");
+          printf("     BTC - BitCoin\n");
+          printf("     BTB - BitBar\n");
+          printf("     LTB - LiteBar\n");
+          printf("     LTC - LiteCoin\n");
+
+          printf("\n\n");
+          return 1;
+        }
+        printf("are you looking for \'help name' ??\n");
+        return 1;
+      }
       ListCommands();
       return 1;
     }
-    if(!strcasecmp(argv[1],"btb"))
+    
+    if((!strcasecmp(argv[1],"btc"))||(!strcasecmp(argv[1],"bitcoin")))
+    {
+      CName="BitCoin";
+      addrtype = 0;
+      privtype = 128;
+      Cchar="1";
+    }
+    if((!strcasecmp(argv[1],"btb"))||(!strcasecmp(argv[1],"bitbar")))
     {
       CName="BitBar";
       addrtype = 25;
       privtype = 153;
+      Cchar="B";
     }
-    if(!strcasecmp(argv[1],"bitbar"))
+    if((!strcasecmp(argv[1],"ltc"))||(!strcasecmp(argv[1],"litecoin")))
     {
-      CName="BitBar";
-      addrtype = 25;
-      privtype = 153;
+      CName="LiteCoin";
+      addrtype = 48;
+      privtype = 176;
+      Cchar="L";
     }
+    if((!strcasecmp(argv[1],"ltb"))||(!strcasecmp(argv[1],"litebar")))
+    {
+      CName="LiteBar";
+      addrtype = 48;
+      privtype = 176;
+      Cchar="L";
+    }
+
     printf("Setting up for %s ",CName.c_str());
   }
 
   if(argc==2)
   {
-    printf("\n - Missing prefix string for %s\n\n",CName.c_str());
+    printf("\n - Missing search string for %s\n\n",CName.c_str());
     return 1;
   }
   
@@ -430,12 +465,13 @@ int main(int argc, char **argv)
   {
     int len=strlen(argv[2])+1;
     CString=argv[2];
-    CString="B"+CString;
+    CString=Cchar+CString;
     printf(" - search pattern set to %s length %i.\n",CString.c_str(),len);
+char *temp=(char*)CString.c_str();
+patterns=&temp;
+npatterns=1;
 
   }
-    printf("\n");
-    printf("\n");
 
 /*
 	while ((opt = getopt(argc, argv, "vqnrik1eE:P:BCNDTLSX:F:t:h?f:o:s:")) != -1) {
@@ -664,8 +700,8 @@ int main(int argc, char **argv)
 //			usage(argv[0]);
 			return 1;
 		}
-		patterns = &argv[optind];
-		npatterns = argc - optind;
+//		patterns = &argv[optind];
+//		npatterns = argc - optind;
 
 		if (!vg_context_add_patterns(vcp,
 					     (const char ** const) patterns,
