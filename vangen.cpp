@@ -19,7 +19,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <string>
-using namespace std
+//using std::string;
+//using namespace std;
 #include <math.h>
 #include <assert.h>
 
@@ -40,6 +41,9 @@ extern "C"
 
 const char *version = VANITYGEN_VERSION;
 #define DATE "June 06, 2016"
+
+std::string CName;
+std::string CString;
 
 /*
  * Address search thread main loop
@@ -358,8 +362,6 @@ void ListCommands()
 
 int main(int argc, char **argv)
 {
-  string CName;
-  string CString;
 	int addrtype = 0;
 	int scriptaddrtype = 5;
 	int privtype = 128;
@@ -415,20 +417,21 @@ int main(int argc, char **argv)
       addrtype = 25;
       privtype = 153;
     }
-    printf("Setting up for %s ",CName);
+    printf("Setting up for %s ",CName.c_str());
   }
 
   if(argc==2)
   {
-    printf("\n - Missing prefix string for %s\n\n",CName);
+    printf("\n - Missing prefix string for %s\n\n",CName.c_str());
     return 1;
   }
   
   if(argc>2)
   {
     int len=strlen(argv[2])+1;
-    CString="B"+argv[2];
-    printf("Set to %s length %i.\n",CString,len);
+    CString=argv[2];
+    CString="B"+CString;
+    printf(" - search pattern set to %s length %i.\n",CString.c_str(),len);
 
   }
     printf("\n");
