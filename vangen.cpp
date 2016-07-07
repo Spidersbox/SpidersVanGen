@@ -412,6 +412,7 @@ int main(int argc, char **argv)
           printf("     BTB - BitBar\n");
           printf("     LTB - LiteBar\n");
           printf("     LTC - LiteCoin\n");
+          printf("     CAP - BottleCaps\n");
 
           printf("\n\n");
           return 1;
@@ -449,6 +450,13 @@ int main(int argc, char **argv)
       CName="LiteBar";
       addrtype = 48;
       privtype = 176;
+      Cchar="L";
+    }
+    if((!strcasecmp(argv[1],"cap"))||(!strcasecmp(argv[1],"bottlecaps"))||(!strcasecmp(argv[1],"bottlecap")))
+    {
+      CName="BottleCaps";
+      addrtype = 33;
+      privtype = 161;
       Cchar="L";
     }
 
