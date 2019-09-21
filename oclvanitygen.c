@@ -57,8 +57,6 @@ usage(const char *name)
 "-i            Case-insensitive prefix search\n"
 "-k            Keep pattern and continue search after finding a match\n"
 "-1            Stop after first match\n"
-"-N            Generate namecoin address\n"
-"-T            Generate bitcoin testnet address\n"
 "-X <version>  Generate address with the given version\n"
 "-e            Encrypt private keys, prompt for password\n"
 "-E <password> Encrypt private keys with <password> (UNSAFE)\n"
@@ -78,6 +76,7 @@ usage(const char *name)
 "-N            Generate Namecoin address\n"
 "-L            Generate Litecoin and LiteBar address\n"
 "-B            Generate Bitbar address\n"
+"-H            Generate litecoin Plus address\n"
 "-T            Generate bitcoin Testnet address\n"
 "-G            Generate doGecoin address\n"
 "-A            Generate bottlecAp address\n"
@@ -130,7 +129,7 @@ main(int argc, char **argv)
 	int i;
 
 //        while ((opt = getopt(argc, argv, "vqnrik1eE:P:BNDTLSX:F:t:h?f:o:s:")) != -1) {
-	while ((opt = getopt(argc, argv, "vqik1NLABGTCX:eE:p:P:d:w:t:g:b:VSh?f:o:s:D:")) != -1) {
+	while ((opt = getopt(argc, argv, "vqik1NLABPGTCX:eE:p:d:w:t:g:b:VSh?f:o:s:D:")) != -1) {
 		switch (opt) {
 		case 'v':
 			verbose = 2;
@@ -157,10 +156,14 @@ main(int argc, char **argv)
                         privtype = 176;
                         //scriptaddrtype = -1;
                         break;
-                case 'B':
+                case 'B':	//Bitbar
                         addrtype = 25;
                         privtype = 153;
                         //scriptaddrtype = -1;//-1;
+                        break;
+                case 'P':	// liitecoin Plus
+                        addrtype = 75;
+                        privtype = 203;
                         break;
                 case 'G':	// Doge
                         addrtype = 30;
@@ -181,6 +184,7 @@ main(int argc, char **argv)
                         addrtype = 33;
                         privtype = 161;
 			break;
+
 
 		case 'X':
 			addrtype = atoi(optarg);
@@ -256,24 +260,24 @@ main(int argc, char **argv)
 			}
 			devstrs[ndevstrs++] = optarg;
 			break;
-		case 'P': {
-			if (pubkey_base != NULL) {
-				fprintf(stderr,
-					"Multiple base pubkeys specified\n");
-				return 1;
-			}
-			EC_KEY *pkey = vg_exec_context_new_key();
-			pubkey_base = EC_POINT_hex2point(
-				EC_KEY_get0_group(pkey),
-				optarg, NULL, NULL);
-			EC_KEY_free(pkey);
-			if (pubkey_base == NULL) {
-				fprintf(stderr,
-					"Invalid base pubkey\n");
-				return 1;
-			}
-			break;
-		}
+//		case 'P': {
+//			if (pubkey_base != NULL) {
+//				fprintf(stderr,
+//					"Multiple base pubkeys specified\n");
+//				return 1;
+//			}
+//			EC_KEY *pkey = vg_exec_context_new_key();
+//			pubkey_base = EC_POINT_hex2point(
+//				EC_KEY_get0_group(pkey),
+//				optarg, NULL, NULL);
+//			EC_KEY_free(pkey);
+//			if (pubkey_base == NULL) {
+//				fprintf(stderr,
+//					"Invalid base pubkey\n");
+//				return 1;
+//			}
+//			break;
+//		}
 		case 'f':
 			if (npattfp >= MAX_FILE) {
 				fprintf(stderr,
