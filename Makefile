@@ -18,7 +18,8 @@ all: $(PROGS)
 vangen: vangen.o pattern.o util.o
 	$(CXX) $^ -o $@ $(CFLAGS) $(LIBS)
 
-oclvanitygen: oclvanitygen.o oclengine.o pattern.o util.o
+
+vangenocl: oclvanitygen.o oclengine.o pattern.o util.o
 	$(CXX) $^ -o $@ $(CFLAGS) $(LIBS) $(OPENCL_LIBS)
 
 oclvanityminer: oclvanityminer.o oclengine.o pattern.o util.o
